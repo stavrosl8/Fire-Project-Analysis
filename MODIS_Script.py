@@ -50,7 +50,7 @@ for file in tqdm.tqdm(fileslist):
     hour = file.split('\\')[-1].split('.')[2][:2] + ":" + file.split('\\')[-1].split('.')[2][2:] + ":00 UTC"
     sat = file.split('\\')[-1].split('.')[0][:5]
     md = file.split('\\')[-1].split('.')[1][5:]
-    title = 'Satellite ID: '+sat+" | "+date+" "+hour
+    title = 'Satellite ID: ' + sat + " | " + date + " " + hour
    
     hdf = SD(file, SDC.READ)
     
@@ -108,21 +108,20 @@ for file in tqdm.tqdm(fileslist):
 
         ax.add_geometries(adm1_shapes, ccrs.PlateCarree(), linewidth=0.4,
                    edgecolor='black', facecolor='none', alpha=1)  
-        cbar_kwargs = {'shrink':0.95, 'pad':0.03,'extend':'max','orientation': 'vertical',}
+        cbar_kwargs = {'shrink':0.95, 'pad':0.03,'extend':'max','orientation': 'vertical'}
 
-        img = param_da.plot.pcolormesh(ax=ax, vmin=0, vmax=1.2, cbar_kwargs=cbar_kwargs,cmap=cmap, transform=ccrs.PlateCarree(), x="longitude", y="latitude")
-              
+        img = param_da.plot.pcolormesh(ax=ax, vmin=0, vmax=1.2, cmap=cmap, add_colorbar=False, transform=ccrs.PlateCarree(), x="longitude", y="latitude")
         gl = ax.gridlines(draw_labels=True, linestyle='--')
         gl.top_labels=False
         gl.right_labels=False
         gl.xformatter=LONGITUDE_FORMATTER
         gl.yformatter=LATITUDE_FORMATTER
-        gl.xlabel_style={'size':14}
-        gl.ylabel_style={'size':14}
-        plt.xticks(fontsize=16)
-        plt.yticks(fontsize=16)
-        plt.xlabel("Longitude", fontsize=16)
-        plt.ylabel("Latitude", fontsize=16)
-        ax.set_title(title, fontsize=20, pad=10.0, fontweight="bold")
-        plt.savefig(f'Graphs/MODIS/{title_save}.png',dpi=300)
+        gl.xlabel_style={'size':16}
+        gl.ylabel_style={'size':16}
+        
+        cbar = fig.colorbar(img, ax=ax, shrink=0.9, extend='max', orientation='vertical', fraction=0.04, pad=0.03)
+        cbar.set_label('AOD', fontsize=20)
+        cbar.ax.tick_params(labelsize=20)
+        ax.set_title(title, fontsize=25, pad=10.0, fontweight="bold")
+        plt.savefig(f'Graphs/MODIS/{title_save}.png', dpi=150, bbox_inches='tight')
         plt.close()    

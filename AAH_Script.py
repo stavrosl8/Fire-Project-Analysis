@@ -80,7 +80,7 @@ def visualize_scatter(xr_dataarray, conversion_factor, projection,point_size, co
     cbar.set_label(unit, fontsize=16)
     cbar.ax.tick_params(labelsize=14)
     ax.set_title(title, fontsize=20, pad=10.0, fontweight="bold")
-    plt.savefig(f'Graphs/{title_save}.png',dpi=300)
+    plt.savefig(f'Graphs/GOME/{title_save}.png',dpi=150, bbox_inches='tight')
     plt.close()
     return()
 
@@ -121,7 +121,7 @@ for filename in tqdm.tqdm(fileslist):
             visualize_scatter(xr_dataarray=ds_ahh_masked, 
                          conversion_factor=1, 
                          projection=ccrs.PlateCarree(),
-                         point_size=10,
+                         point_size=180,
                          color_scale='viridis',
                          unit=ds_ahh_masked.long_name + " ("+ds_ahh_masked.units+")", 
                          title=date_str,
